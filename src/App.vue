@@ -99,7 +99,7 @@ function decryptImage() {
   try {
     const text = extractWatermark(originalImageData.value)
     
-    if (text && text.length > 0) {
+    if (text !== null) {
       showToast('发现水印: ' + text, 'success', 8000)
     } else {
       showToast('未发现水印', 'warning')

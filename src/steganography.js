@@ -28,9 +28,15 @@ export function binaryToText(binary) {
   return text
 }
 
+// 魔数标记，用于识别是否包含水印
+const MAGIC_HEADER = 'LSBWM'
+
 export function embedWatermark(imageData, text) {
   const data = imageData.data
-  const binary = textToBinary(text)
+  
+  // 在文本前添加魔数标记
+  const textWithMagic = MAGIC_HEADER + text
+  const binary = textToBinary(textWithMagic)
   
   if (binary.length > (data.length / 4) * 3) {
     throw new Error('文字太长，无法嵌入到该图片中')
@@ -65,7 +71,33 @@ export function extractWatermark(imageData) {
     binary += (data[i + 2] & 1).toString()
   }
   
-  return binaryToText(binary)
+  const text = binaryToText(binary)
+  
+  // 检查是否包含魔数标记
+  if (text && text.startsWith(MAGIC_HEADER)) {
+    // 返回去掉标记后的实际水印内容
+    return text.slice(MAGIC_HEADER.length)
+  }
+  
+  // 没有找到标记，说明没有水印
+  return null
+}
+
+export function hasWatermark(imageData) {
+  const data = imageData.data
+  let binary = ''
+  
+  // 只需要读取前几个字节来检查魔数
+  const checkLength = (MAGIC_HEADER.length * 16 + 16) * 3
+  
+  for (let i = 0; i < data.length && i < checkLength; i += 4) {
+    binary += (data[i] & 1).toString()
+    binary += (data[i + 1] & 1).toString()
+    binary += (data[i + 2] & 1).toString()
+  }
+  
+  const text = binaryToText(binary)
+  return text && text.startsWith(MAGIC_HEADER)
 }
 
 export function loadImage(file) {
