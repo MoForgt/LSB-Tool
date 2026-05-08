@@ -299,6 +299,29 @@ textarea:focus {
   color: #c9700a;
 }
 
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: #999;
+}
+
+.footer a {
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: #111;
+  text-decoration: underline;
+}
+
+.footer .divider {
+  margin: 0 12px;
+  color: #ddd;
+}
+
 .toast-container {
   position: fixed;
   top: 20px;

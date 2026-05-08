@@ -240,6 +240,12 @@ function getToastIcon(type) {
       <p class="warn">注意：如果图片被严重压缩（如高压缩率JPEG），水印可能会丢失。建议使用PNG格式保存。</p>
     </div>
 
+    <footer class="footer">
+      <a href="https://github.com/MoForgt/LSB-Tool" target="_blank" rel="noopener">GitHub</a>
+      <span class="divider">|</span>
+      <span>Powered by <a href="https://www.xrbk.cn" target="_blank" rel="noopener">Moforgt</a></span>
+    </footer>
+
     <div class="toast-container">
       <div 
         v-for="toast in toasts" 
